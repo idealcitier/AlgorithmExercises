@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class ATOI{
+public class Atoi1{
 	public static void main(String[] args){
 		Scanner sc = new Scanner(System.in);
 		String str = sc.next();
@@ -21,11 +21,20 @@ public class ATOI{
 			flag = '+';
 			i++;
 		}
-		int num=0;
-		for(;i < ch.length && ch[i] <= '9' && ch[i] >= '0';i++){
-			int tmp = ch[i] - '0';
-			num = num * 10 + tmp;
+		int num = 0;
+		int tmp = 0;
+		while(i < ch.length ){
+			if( ch[i] <= '9' && ch[i] >= '0' ){
+				tmp = ch[i] - '0';
+				num = num * 10 + tmp;
+				i++;
+			}else{
+				return 0;
+			}
+
+
 		}
+
 		if(flag == '-'){
 			num = -num;
 		}
