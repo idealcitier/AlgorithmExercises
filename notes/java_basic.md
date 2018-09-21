@@ -33,6 +33,28 @@ java语言支持8中基本的数据类型
 int--->Integer 装箱
 Integer--->int 拆箱
 
+#### int 和 Integer 有什么区别?
+Java 是一个近乎纯洁的面向对象编程语言，但是为了编程的方便还是引入不是对象的基本数据类型，但是为了能够将这些基本数据类型当成对象操作，Java 为每一个基本数据类型都引入了对应的包装类型（wrapper class），int 的包装类就是 Integer，从 JDK 1.5 开始引入了自动装箱/拆箱机制，使得二者可以相互转换。
+
+Java 为每个原始类型提供了包装类型：
+
+原始类型: boolean，char，byte，short，int，long，float，double
+
+包装类型：Boolean，Character，Byte，Short，Integer，Long，Float，Double
+```java
+public class AutoUnboxingTest {  
+
+    public static void main(String[] args) {  
+        Integer a = new Integer(3);  
+        Integer b = 3;              // 将3自动装箱成Integer类型  
+        int c = 3;  
+        System.out.println(a == b); // false 两个引用没有引用同一对象  
+        System.out.println(a == c); // true a自动拆箱成int类型再和c比较  
+    }  
+}  
+```
+
+
 ### 一个.java文件中是否可以包括多个类(不是内部类)？有什么限制？
 可以有多个类，但是只能有一个public类，并且public的类名和文件名要一致
 
@@ -192,6 +214,49 @@ class B implements A{
 - 编写完 equals 方法后，问自己它是否满足对称性、传递性、一致性；
 - 重写 equals 时总是要重写 hashCode；
 - 不要将 equals 方法参数中的 Object 对象替换为其他的类型，在重写时不要忘掉 @Override 注解。
+#### `==`
+- `==`:关系操作符生成的是一个boolean的结果，计算的是操作数的值之间的关系。说的简单一点就是比较的是两个值是否相等。
+```java
+public class Equals{
+    public static void main(String[] args){
+        int m = 3;
+        int n = 3;
+        System.out.println(m == n);
+
+        String str = new String("hello");
+        String str1 = new String("hello");
+        String str2 = new String("hello");
+
+        System.out.println(str1 == str2);
+
+        str1 = str;
+        str2 = str;
+        System.out.println(str1 == str2);
+    }
+}
+```
+```
+true
+false
+true
+```
+m和n存储都是数值，肯定是相同的。
+这里要提一下，基本数据类型和非基本数据类型的区别。
+java的基本数据类型
+`byte, char, short, int, long, float, double, boolean `
+对于上面的基本数据类型，关系操作符比较的就是值本身，所以`m=n`。
+对于非基础数据类型(引用类型的变量)，存储的并不是值本身，而是与其相关联的对象在内存中的地址。
+上面代码中str,str1,str2都是创建的不同的对象，分别指向不同的内存地址，所以使用关系运算符`==`，返回的就是false。
+```java
+str1 = str;
+str2 = str;
+System.out.println(str1 == str2);
+```
+上面的str1和str2指向的是同一个对象，也就是说同一个内存地址，所以返回的就是true。
+#### `equals`
+
+equals方法是基于Object中方法的，所有继承Object类的类都有该方法。
+默认比较的是类型变量所指向的对象的地址。
 
 ### 访问修饰符 public, private, protected, 以及不写（默认）时的区别？
 |修饰符|当前类|同包|子类|其他包|
@@ -215,4 +280,82 @@ finally：通常放在 try…catch 的后面构造总是执行代码块，这就
 finalize：Object 类中定义的方法，Java 中允许使用 finalize() 方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。这个方法是由垃圾收集器在销毁对象时调用的，通过重写finalize() 方法可以整理系统资源或者执行其他清理工作。
 
 ### `&` `&&` `|` `||`
+
+#### `&` `&&`
+两者可以用作逻辑与的运算符，表示的逻辑与操作(and)，当运算符两边的表达式的结果都为 true 时，整个运算结果才为 true，否则，只要有一方为 false，则结果为 false。
+
+但两者存在一定的差异：
+- `&&` 具有短路的功能，也就是第一个表达式的为false，不再计算第二个表达式。对于 `if(str != null&& !str.equals(“”))` 表达式，当 str 为 null 时，后面的表达式不会执行，所以不会出现 `NullPointerException `如果将 `&&` 改为` &` ，则会抛出`NullPointerException` 异常。`If(x==33 & ++y>0)` y 会增长， `If(x==33 && ++y>0)` 不会增长。
+- `&` 还可以用作位运算符，当 `&` 操作符两边的表达式不是 `boolean` 类型时，`&` 表示按位与操作，我们通常使用 0x0f 来与一个整数进行 & 运算，来获取该整数的最低 4 个 bit 位，例如，0x31 & 0x0f 的结果为 0x01。
+
+### 存在使 i + 1 < i的数吗?
+答案：存在
+
+解析：如果 i 为 int 型，那么当 i 为 int 能表示的最大整数时，i+1 就溢出变成负数了，此时不就 <i 了吗。
+
+扩展：存在使 i > j || i <= j 不成立的数吗?
+
+答案：存在
+
+解析：比如 Double.NaN 或 Float.NaN 。
+
+###  char 型变量中能不能存贮一个中文汉字?为什么?
+答：char 类型可以存储一个中文汉字，因为 Java 中使用的编码是 Unicode（不选择任何特定的编码，直接使用字符在字符集中的编号，这是统一的唯一方法），一个 char 类型占 2 个字节（16bit），所以放一个中文是没问题的。
+
+补充：使用 Unicode 意味着字符在 JVM 内部和外部有不同的表现形式，在 JVM 内部都是 Unicode，当这个字符被从 JVM 内部转移到外部时（例如存入文件系统中），需要进行编码转换。所以 Java 中有字节流和字符流，以及在字符流和字节流之间进行转换的转换流，如 InputStreamReader 和 OutputStreamReader，这两个类是字节流和字符流之间的适配器类，承担了编码转换的任务；对于 C 程序员来说，要完成这样的编码转换恐怕要依赖于union（联合体/共用体）共享内存的特征来实现了。
+
+### 字符串初始化，代码是没有办法编译成功的
+```java
+import java.io.*;
+import java.util.*;
+
+public class foo{
+
+    public static void main (String[] args){
+
+        String s;
+
+        System.out.println("s=" + s);
+
+    }
+
+}
+```
+上面的代码就是一个很好的例子，String s没有初始化，代码不能够编译通过。
+
+### length，length()使用的时候经常的混淆
+数组-----> length, 数组用length属性
+String----->length()，string的长度，通过length()方法获得。
+
+### String是final类，没有 办法继承
+
+### String s=new String(“xyz”);创建了几个字符串对象？
+- 两个对象，一个是静态存储区的"xyz",一个是用new创建在堆上的对象。
+
+### 字符串转化为数字
+```java
+String s=”12345″;
+
+long num=Long.valueOf(s).longValue();
+```
+
+### 为了显示 myStr = 23 这样的结果，写出在控制台输入的命令
+```java
+public class MyClass {
+
+public static void main(String args[]) {
+
+    String s1 = args[0];
+
+    String s2 = args[1];
+
+    String myStr = args[2];
+
+    System.out.printin(“myStr =” + s2 + myStr);
+
+    }
+
+}
+```
+答：java MyClass 1 2 3 4
 
