@@ -141,3 +141,16 @@ void OrderPolynomial (char* InputString, char* OutputString)
 	method(a,OutputString,num);
     return;
 }
+
+int main(){
+	
+	char in[40];
+	char out[40];
+	scanf("%s", in);
+
+	OrderPolynomial (in, out);
+
+	printf("%s\n", out);
+
+	return 0;
+}

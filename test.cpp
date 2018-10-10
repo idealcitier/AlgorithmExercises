@@ -1,6 +1,6 @@
 #include <iostream>
 #include <map>
-#include <string>
+#include <cstring>
 #include <stack>
 using namespace std;
 

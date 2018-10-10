@@ -82,7 +82,7 @@ int main()
   pn = pn_next;
   position = position+1;
  }
- while(true)
+ while(1)
  {
   memset(out,0,1024);
   position = getUnit(out,position,&pn_next);
