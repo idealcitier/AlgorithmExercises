@@ -31,3 +31,11 @@
 ## 分析统计算法的执行效率以及资源消耗
 
 --> **[click here](https://github.com/idealcitier/algorithmExercises/tree/master/dataStructure/01)**
+
+## 数组
+
+--> **[click here](https://github.com/idealcitier/algorithmExercises/tree/master/dataStructure/02)**
+
+## 链表
+
+--> **[click here](https://github.com/idealcitier/algorithmExercises/tree/master/dataStructure/03)**
