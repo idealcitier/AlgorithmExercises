@@ -10,7 +10,10 @@ class Solution{
 			}
 		
 		}
-		throw new IllegalArgumentException("No two num solution");	
+		// 这里必须有返回值，若不存在结果，可以返回一个空的数组，也可以直接抛出一个异常
+		return new int[0];
+
+		// throw new IllegalArgumentException("No two num solution");	
 	}
 
 
