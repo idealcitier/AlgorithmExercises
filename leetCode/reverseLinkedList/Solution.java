@@ -6,6 +6,7 @@
  *     ListNode(int x) { val = x; }
  * }
  */
+//  基本的思路就是把该节点的next指向它的前驱节点
 class Solution {
     public ListNode reverseList(ListNode head) {
         ListNode pre = null;
