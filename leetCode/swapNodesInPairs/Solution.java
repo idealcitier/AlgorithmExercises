@@ -16,15 +16,19 @@
  */
 class Solution {
     public ListNode swapPairs(ListNode head) {
-        
-    }
-    public int getLength(ListNode head){
-        ListNode currNode = head;
-        int length = 0;
-        while(currNode != null){
-            currNode = currNode.next;
-            length++;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode curr = dummy;
+        while(curr.next != null && curr.next.next != null){
+            ListNode a = curr.next;
+            ListNode b = curr.next.next;
+            a.next = b.next;
+            curr.next = b;
+            curr.next.next = a;
+            curr = curr.next.next;
         }
-        return length;
+        return dummy.next;
+
     }
+
 }
