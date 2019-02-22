@@ -9,15 +9,15 @@
 //  基本的思路就是把该节点的next指向它的前驱节点
 class Solution {
     public ListNode reverseList(ListNode head) {
-        ListNode pre = null;
+        ListNode dummy = null;
         ListNode curr = head;
         while(curr != null){
             ListNode tmp = curr.next;
-            curr.next = pre;
-            pre =  curr;
+            curr.next = dummy;
+            dummy =  curr;
             curr = tmp;
 
         }
-        return pre;
+        return dummy;
     }
 }
