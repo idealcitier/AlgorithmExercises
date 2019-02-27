@@ -23,7 +23,7 @@ import java.util.*;
 public class Solution {
     public boolean isValid(String s) {
         if(s.length() == 0)
-            return false;
+            return true;
         Stack<Character> stack = new Stack<Character>(); // 创建堆栈对象 
         for(int i = 0;i < s.length(); i++)
         {
@@ -33,7 +33,7 @@ public class Solution {
             {
                 if(stack.empty()) return false;
                 char out = stack.pop();
-                if((out - s.charAt(i)) > 2 || (out - s.charAt(i)) < -2)
+                if((s.charAt(i)- out) > 2 || (s.charAt(i) - out) < 0)
                     return false;
             }
         }
@@ -43,7 +43,7 @@ public class Solution {
     }
     public static void main(String args[]){
         Solution S = new Solution();
-        String s = "(]";
+        String s = "((((}}}";
         System.out.println(S.isValid(s));
         
     }
